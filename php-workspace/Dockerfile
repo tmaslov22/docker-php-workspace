@@ -64,16 +64,11 @@ RUN apk add --update --no-cache icu-libs \
 #  Install php extensions
 RUN php -m && \
     docker-php-ext-configure bcmath --enable-bcmath && \
-    docker-php-ext-configure gd \
-      --with-freetype-dir=/usr/include/ \
-      --with-jpeg-dir=/usr/include/ \
-      --with-png-dir=/usr/include/ && \
     docker-php-ext-configure gettext && \
     docker-php-ext-configure intl --enable-intl && \
     docker-php-ext-configure opcache --enable-opcache && \
     docker-php-ext-configure pcntl --enable-pcntl && \
     docker-php-ext-configure soap && \
-    docker-php-ext-configure zip --enable-zip --with-libzip && \
     docker-php-ext-install exif \
         mysqli \
         opcache \
@@ -88,13 +83,6 @@ RUN php -m && \
         zip \
         calendar \
         pdo_mysql && \
-    pecl install redis && \
-    docker-php-ext-enable redis && \
-    apk add --update --no-cache --virtual .docker-php-mongodb-dependencies \
-    heimdal-dev && \
-    pecl install mongodb && \
-    docker-php-ext-enable mongodb && \
-    apk del .docker-php-mongodb-dependencies && \
     apk add --update --no-cache \
         libpq && \
     # Build dependancies for PostgreSQL \
@@ -125,7 +113,5 @@ USER root
 
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
-
-USER www-data:www-data
 
 WORKDIR /var/www/
