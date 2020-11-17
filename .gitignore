@@ -23,8 +23,7 @@
 !/nginx/logs/.gitkeep
 
 # Файлы web-проектов
-/projects/**
-!/projects/.gitkeep
+/projects/
 
 
 # Другие файлы
